@@ -9,7 +9,7 @@ function herokuGetUsersInCity(city) {
     }
 
     const options = {
-        url: `https://bpdts-test-app.herokuapp.com/city/${city}/users`,
+        url: `https://bpdts-test-app.herokuapp.com/city/${encodeURIComponent(city)}/users`,
         headers: {
             'accept': 'application/json'
         }

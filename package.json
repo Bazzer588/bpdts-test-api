@@ -7,12 +7,15 @@
   "license": "ISC",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest src --coverage"
   },
   "dependencies": {
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
   },
   "repository": {
     "type": "git",

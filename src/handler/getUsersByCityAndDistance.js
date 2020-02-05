@@ -42,14 +42,14 @@ module.exports = getUsersByCityAndDistance;
 // CAUTION: may block on large result sets
 
 function mergeUsers({cityUsers, allUsers, city, distance, lat, lng}) {
-    const output = {};
+    const userSet = {};
 
     // only add users within the distance limit
     allUsers.forEach(user => {
         const miles = calcDistanceInMiles(lat, lng, user.latitude, user.longitude);
         if (miles <= distance) {
             user.distanceMiles = Math.floor(miles);
-            output[user.id] = user;
+            userSet[user.id] = user;
         }
     });
 
@@ -58,12 +58,11 @@ function mergeUsers({cityUsers, allUsers, city, distance, lat, lng}) {
         const miles = calcDistanceInMiles(lat, lng, user.latitude, user.longitude);
         user.distanceCheck = Math.floor(miles);
         user.city = city;
-        output[user.id] = user;
+        userSet[user.id] = user;
     });
 
-    // convert output to an array
-    const keys = Object.keys(output);
-    const users = keys.map(key => output[key]);
+    // convert userSet to an array
+    const users = Object.values(userSet);
 
     // return a response package
     return {
