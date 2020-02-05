@@ -16,7 +16,7 @@ function herokuGetUsers() {
         request(options, (error, response, body) => {
             if (error) {
                 console.log('USERS ERROR', error);
-                reject({error, body});
+                reject({error, response, body});
             } else {
                 resolve(JSON.parse(body));
             }

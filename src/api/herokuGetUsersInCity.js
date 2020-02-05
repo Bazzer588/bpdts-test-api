@@ -20,7 +20,7 @@ function herokuGetUsersInCity(city) {
         request(options, (error, response, body) => {
             if (error) {
                 console.log('CITY ERROR', error);
-                reject({error, body});
+                reject({error, response, body});
             } else {
                 resolve(JSON.parse(body));
             }
