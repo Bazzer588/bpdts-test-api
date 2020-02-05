@@ -10,6 +10,9 @@ const asyncForEach = require('../util/asyncForEach');
  * @param lat
  * @param lng
  * @return {Promise<{users: any[], info: {distance: *, lng: *, city: *, matched: number, lat: *}}>}
+ *
+ * TODO: if allUsers = [] then we could just return the cityUsers array
+ * TODO: if cityUsers = [] then we might as well just construct an array from the users found by distance
  */
 
 async function mergeUsersByCityAndDistance({cityUsers, allUsers, city, distance, lat, lng}) {

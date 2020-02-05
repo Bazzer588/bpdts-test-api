@@ -2,7 +2,7 @@ const getUsersByCityAndDistance = require('../handler/getUsersByCityAndDistance'
 
 //  examples
 // /query?city=Budapest
-// /query?latitude=-26.94087&longitude=29.24905
+// /query?lat=-26.94087&lng=29.24905
 
 function queryRoute(req, res) {
     console.log(req.query);
