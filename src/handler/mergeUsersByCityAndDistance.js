@@ -17,17 +17,17 @@ async function mergeUsersByCityAndDistance({cityUsers, allUsers, city, distance,
 
     // only add users within the distance limit
     await asyncForEach(allUsers, user => {
-        //allUsers.forEach(user => {
         const miles = calcDistanceInMiles(lat, lng, user.latitude, user.longitude);
         if (miles <= distance) {
+            // add distance to the user for debug purposes
             user.distanceMiles = Math.floor(miles);
             userSet[user.id] = user;
         }
     });
 
-    // add all users found by the city search
+    // add all users found by the city search - each user will overwrite any existing user in the set
     await asyncForEach(cityUsers, user => {
-        // cityUsers.forEach(user => {
+        // adding the city and distanceCheck to the user for debug purposes - not needed for actual use?
         const miles = calcDistanceInMiles(lat, lng, user.latitude, user.longitude);
         user.distanceCheck = Math.floor(miles);
         user.city = city;

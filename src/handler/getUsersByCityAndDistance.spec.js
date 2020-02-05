@@ -9,11 +9,14 @@ jest.mock('./mergeUsersByCityAndDistance');
 
 describe('handler/getUsersByCityAndDistance', () => {
 
-    it('calls both heroku apis', () => {
+    beforeEach(() => {
         jest.resetAllMocks();
+        mergeUsersByCityAndDistance.mockImplementation();
+    });
+
+    it('calls both heroku apis', () => {
         herokuGetUsers.mockImplementation(() => [1, 2]);
         herokuGetUsersInCity.mockImplementation(() => [44, 55]);
-        mergeUsersByCityAndDistance.mockImplementation();
 
         return getUsersByCityAndDistance({city: 'Zodnia', lat: 1, lng: 1})
             .then(() => {
@@ -30,11 +33,26 @@ describe('handler/getUsersByCityAndDistance', () => {
             });
     });
 
+    it('does not call herokuGetUsers if no lat/lng can be calculated', () => {
+        herokuGetUsers.mockImplementation();
+        herokuGetUsersInCity.mockImplementation(() => [10, 9, 8]);
+
+        return getUsersByCityAndDistance({city: 'Nowhere'})
+            .then(() => {
+                expect(herokuGetUsers).not.toHaveBeenCalled();
+                expect(herokuGetUsersInCity).toHaveBeenCalledWith('Nowhere');
+                expect(mergeUsersByCityAndDistance).toHaveBeenCalledWith({
+                    allUsers: [],
+                    cityUsers: [10, 9, 8],
+                    city: 'Nowhere',
+                    distance: 50
+                });
+            });
+    });
+
     it('does not call herokuGetUsersInCity if no city is provided', () => {
-        jest.resetAllMocks();
         herokuGetUsers.mockImplementation(() => [66, 77, 88]);
         herokuGetUsersInCity.mockImplementation();
-        mergeUsersByCityAndDistance.mockImplementation();
 
         return getUsersByCityAndDistance({lat: 12, lng: 13})
             .then(() => {
@@ -51,10 +69,8 @@ describe('handler/getUsersByCityAndDistance', () => {
     });
 
     it('works out lat and lng from city if provided', () => {
-        jest.resetAllMocks();
         herokuGetUsers.mockImplementation(() => [42]);
         herokuGetUsersInCity.mockImplementation(() => [11, 33]);
-        mergeUsersByCityAndDistance.mockImplementation();
 
         return getUsersByCityAndDistance({city: 'London'})
             .then(() => {
@@ -72,10 +88,8 @@ describe('handler/getUsersByCityAndDistance', () => {
     });
 
     it('handles an error in herokuGetUsers', () => {
-        jest.resetAllMocks();
         herokuGetUsers.mockImplementation(() => Promise.reject({xxx: 222}));
         herokuGetUsersInCity.mockImplementation(() => [44, 55]);
-        mergeUsersByCityAndDistance.mockImplementation();
 
         return getUsersByCityAndDistance({city: 'Zodnia', lat: 1, lng: 1})
             .then((result) => {
@@ -85,10 +99,8 @@ describe('handler/getUsersByCityAndDistance', () => {
     });
 
     it('handles an error in herokuGetUsersInCity', () => {
-        jest.resetAllMocks();
-        herokuGetUsers.mockImplementation(() => [1,2,3]);
+        herokuGetUsers.mockImplementation(() => [1, 2, 3]);
         herokuGetUsersInCity.mockImplementation(() => Promise.reject({xxx: 222}));
-        mergeUsersByCityAndDistance.mockImplementation();
 
         return getUsersByCityAndDistance({city: 'Zodnia', lat: 1, lng: 1})
             .then((result) => {
