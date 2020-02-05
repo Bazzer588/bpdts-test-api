@@ -1,0 +1,24 @@
+{
+  "name": "bpdts-test-api",
+  "version": "1.0.0",
+  "description": "Node service to call a heroku api",
+  "author": "Barry Parkinson",
+  "homepage": "https://github.com/Bazzer588/bpdts-test-api#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "request": "^2.88.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bazzer588/bpdts-test-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bazzer588/bpdts-test-api/issues"
+  }
+}
