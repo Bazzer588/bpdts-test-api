@@ -19,4 +19,6 @@ describe('geo/calcDistanceInMiles', () => {
         expect(Math.floor(distance)).toEqual(NaN);
     });
 
+    // TODO, more and better tests
+
 });
