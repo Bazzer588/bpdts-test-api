@@ -25,5 +25,12 @@ You can also pass **lat** and **lng** params:
 
 Would have liked to add eslint & jsinspect but out of time
 
-May have gone a little beyond scope here, but in general this is 
+I may have gone a little beyond scope here, but in general this is 
 what the simple 'London' query would have to do anyway
+
+The tricky part is the search & merge of the responses (all users and users returned for a city).
+The all users query returns 1000 now but what if it returned 100,000?
+
+In this case some kind of async JSON parser might be needed to prevent blocking.
+
+I've put in an asynchronous forEach method to prevent blocking during the merge.
