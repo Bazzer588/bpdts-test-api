@@ -6,6 +6,7 @@ const PORT = 8990;
 
 const app = express();
 app.use(compression());
+app.disable('etag');
 
 // define route paths
 
